@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary: #004b87;
+    /* ESITH Blue */
+    --primary-light: #0063b1;
+    --secondary: #9fdf00;
+    /* ESITH Lime Green */
+    --background: #f3f2f0;
+    /* LinkedIn Gray */
+    --surface: #ffffff;
+    --text: #191919;
+    --text-secondary: #666666;
+    --border: #e0e0e0;
+    --shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  body {
+    @apply bg-[#f3f2f0] text-[#191919] antialiased;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif;
+  }
+}
+
+@layer components {
+  .linkedin-card {
+    @apply bg-white border border-[#e0e0e0] rounded-lg shadow-sm overflow-hidden;
+  }
+
+  .glass {
+    @apply bg-white border border-[#e0e0e0] shadow-sm rounded-xl;
+  }
+
+  .glass-card {
+    @apply bg-white border border-[#e0e0e0] shadow-sm hover:shadow-md transition-shadow duration-200 rounded-lg;
+  }
+
+  .text-gradient {
+    @apply text-[#004b87];
+  }
+
+  .btn-primary {
+    @apply bg-[#004b87] text-white px-6 py-2 rounded-full font-semibold shadow-none hover:bg-[#003662] transition-colors duration-200 active:scale-[0.98] disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-[#004b87] border border-[#004b87] px-6 py-2 rounded-full font-semibold hover:bg-slate-50 transition-colors duration-200 active:scale-[0.98];
+  }
+}

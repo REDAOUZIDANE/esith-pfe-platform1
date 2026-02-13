@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  password     String
+  name         String
+  role         String    @default("STUDENT")
+  major        String?
+  profileImage String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  messages     Message[]
+}
+
+model PFE {
+  id              Int      @id @default(autoincrement())
+  title           String
+  description     String
+  academicYear    String
+  major           String
+  studentNames    String
+  reportUrl       String?
+  presentationUrl String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  companyId       Int?
+  company         Company? @relation(fields: [companyId], references: [id])
+}
+
+model Company {
+  id            Int      @id @default(autoincrement())
+  name          String
+  sector        String
+  city          String
+  email         String?
+  phone         String?
+  website       String?
+  contactPerson String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  pfes          PFE[]
+}
+
+model Alert {
+  id        Int      @id @default(autoincrement())
+  type      String   @default("INFO") // INFO, WARNING, URGENT
+  title     String
+  content   String
+  target    String   @default("ALL") // ALL, STUDENT, ADMIN
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Alumni {
+  id             Int      @id @default(autoincrement())
+  name           String
+  graduationYear String
+  major          String
+  currentCompany String?
+  email          String?
+  linkedIn       String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  room      String
+  senderId  Int
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  sender    User     @relation(fields: [senderId], references: [id])
+}

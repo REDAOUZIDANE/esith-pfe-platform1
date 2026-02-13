@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const pfe_controller_1 = require("../controllers/pfe.controller");
+const auth_middleware_1 = require("../middleware/auth.middleware");
+const upload_middleware_1 = require("../middleware/upload.middleware");
+const router = (0, express_1.Router)();
+router.get('/', pfe_controller_1.listPFEs);
+router.post('/', auth_middleware_1.authenticateToken, upload_middleware_1.upload.fields([{ name: 'report', maxCount: 1 }, { name: 'presentation', maxCount: 1 }]), pfe_controller_1.createPFE);
+router.get('/:id', pfe_controller_1.getPFE);
+router.put('/:id', auth_middleware_1.authenticateToken, upload_middleware_1.upload.fields([{ name: 'report', maxCount: 1 }, { name: 'presentation', maxCount: 1 }]), pfe_controller_1.updatePFE);
+router.delete('/:id', auth_middleware_1.authenticateToken, pfe_controller_1.deletePFE);
+exports.default = router;
