@@ -8,16 +8,20 @@ datasource db {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  email        String    @unique
-  password     String
-  name         String
-  role         String    @default("STUDENT")
-  major        String?
-  profileImage String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  messages     Message[]
+  id                   Int       @id @default(autoincrement())
+  email                String    @unique
+  password             String
+  name                 String
+  role                 String    @default("STUDENT")
+  major                String?
+  profileImage         String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  resetPasswordExpires DateTime?
+  resetPasswordToken   String?
+  about                String?
+  skills               String?
+  messages             Message[]
 }
 
 model PFE {
@@ -42,22 +46,30 @@ model Company {
   city          String
   email         String?
   phone         String?
-  website       String?
-  contactPerson String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  contactPerson String?
+  website       String?
   pfes          PFE[]
 }
 
 model Alert {
   id        Int      @id @default(autoincrement())
-  type      String   @default("INFO") // INFO, WARNING, URGENT
+  type      String   @default("INFO")
   title     String
   content   String
-  target    String   @default("ALL") // ALL, STUDENT, ADMIN
+  target    String   @default("ALL")
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ChatRoom {
+  id        String   @id @default(uuid())
+  name      String
+  icon      String?
+  type      String   @default("GROUP") // GROUP, MAJOR, GLOBAL
+  createdAt DateTime @default(now())
 }
 
 model Alumni {
@@ -74,7 +86,10 @@ model Alumni {
 
 model Message {
   id        Int      @id @default(autoincrement())
-  content   String
+  content   String?
+  type      String   @default("TEXT")
+  fileUrl   String?
+  duration  Int?
   room      String
   senderId  Int
   isDeleted Boolean  @default(false)

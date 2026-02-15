@@ -45,10 +45,10 @@ const Login = () => {
             <div className="max-w-md w-full bg-white p-10 rounded-xl relative z-10 border border-[#e0e0e0] shadow-sm animate-in fade-in zoom-in duration-700">
                 <div className="text-center mb-8">
                     <div className="relative inline-block group">
-                        <img src="/logo.png" alt="WladEsith" className="h-16 w-auto mx-auto relative z-10" />
+                        <img src="/logo.png" alt="ESITH" className="h-24 w-auto mx-auto relative z-10" />
                     </div>
-                    <h2 className="mt-6 text-2xl font-bold text-[#191919]">Sign in</h2>
-                    <p className="mt-1 text-sm text-[#666666]">Stay updated on your ESITH professional world</p>
+                    <h2 className="mt-6 text-2xl font-bold text-[#191919]">Portail Carrière</h2>
+                    <p className="mt-1 text-sm text-[#666666]">Connectez-vous à l'excellence ESITH</p>
                 </div>
 
                 {error && (
@@ -84,7 +84,7 @@ const Login = () => {
                     </div>
 
                     <div className="flex items-center justify-between">
-                        <Link to="#" className="text-sm font-semibold text-[#004b87] hover:underline">Forgot password?</Link>
+                        <Link to="/forgot-password" className="text-sm font-semibold text-[#004b87] hover:underline">Forgot password?</Link>
                     </div>
 
                     <button

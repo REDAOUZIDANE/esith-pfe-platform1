@@ -24,3 +24,10 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
         res.status(401).json({ message: 'Unauthorized: Invalid token' });
     }
 };
+
+export const authorizeAdmin = (req: Request, res: Response, next: NextFunction) => {
+    if ((req as any).user?.role !== 'ADMIN') {
+        return res.status(403).json({ message: 'Forbidden: Admin access required' });
+    }
+    next();
+};

@@ -3,6 +3,9 @@ import Layout from './components/common/Layout';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import Profile from './pages/Profile';
 import PFEList from './components/pfe/PFEList';
 import PFECreate from './components/pfe/PFECreate';
 import CompanyList from './components/company/CompanyList';
@@ -10,6 +13,7 @@ import AlumniList from './components/alumni/AlumniList';
 import AlumniCreate from './components/alumni/AlumniCreate';
 import CompanyCreate from './components/company/CompanyCreate';
 import Chat from './components/chat/Chat';
+import UserList from './components/admin/UserList';
 import './index.css';
 
 const App = () => {
@@ -19,6 +23,8 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/" element={<Layout><Dashboard /></Layout>} />
         <Route path="/pfes" element={<Layout><PFEList /></Layout>} />
         <Route path="/pfes/new" element={<Layout><PFECreate /></Layout>} />
@@ -27,6 +33,8 @@ const App = () => {
         <Route path="/alumni" element={<Layout><AlumniList /></Layout>} />
         <Route path="/alumni/new" element={<Layout><AlumniCreate /></Layout>} />
         <Route path="/chat" element={<Layout><Chat /></Layout>} />
+        <Route path="/profile" element={<Layout><Profile /></Layout>} />
+        <Route path="/admin/users" element={<Layout><UserList /></Layout>} />
       </Routes>
     </Router>
   );

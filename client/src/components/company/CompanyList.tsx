@@ -62,7 +62,7 @@ const CompanyList = () => {
                                 onChange={(e) => setSearch(e.target.value)}
                             />
                         </div>
-                        {user?.role === 'ADMIN' && (
+                        {user && (
                             <button
                                 onClick={() => navigate('/companies/new')}
                                 className="bg-[#004b87] text-white p-2 rounded-lg hover:bg-[#003662] transition-colors shadow-sm flex items-center justify-center whitespace-nowrap px-4"

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Search, Building2, Linkedin, Mail, Plus } from 'lucide-react';
+import { Search, Building2, Linkedin, Mail, Plus, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../../config';
 
@@ -20,6 +20,19 @@ const AlumniList = () => {
         };
         fetchAlumni();
     }, []);
+
+    const handleDelete = async (id: number) => {
+        if (!window.confirm('Are you sure you want to remove this contact?')) return;
+        try {
+            const token = localStorage.getItem('token');
+            await axios.delete(`${API_URL}/alumni/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setAlumni(prev => prev.filter(a => a.id !== id));
+        } catch (error) {
+            alert('Error removing contact');
+        }
+    };
 
     const filtered = alumni.filter(a =>
         a.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -45,7 +58,7 @@ const AlumniList = () => {
                                 onChange={(e) => setSearch(e.target.value)}
                             />
                         </div>
-                        {user?.role === 'ADMIN' && (
+                        {user && (
                             <button
                                 onClick={() => navigate('/alumni/new')}
                                 className="bg-[#004b87] text-white p-2 rounded-lg hover:bg-[#003662] transition-colors shadow-sm flex items-center justify-center whitespace-nowrap px-4"
@@ -83,6 +96,15 @@ const AlumniList = () => {
                         </div>
 
                         <div className="flex space-x-2 w-full mt-auto">
+                            {user?.role === 'ADMIN' && (
+                                <button
+                                    onClick={() => handleDelete(person.id)}
+                                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors border border-red-200"
+                                    title="Delete Alumni"
+                                >
+                                    <Trash2 size={16} />
+                                </button>
+                            )}
                             <a
                                 href={person.linkedIn ? (person.linkedIn.startsWith('http') ? person.linkedIn : `https://${person.linkedIn}`) : '#'}
                                 target="_blank"

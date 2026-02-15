@@ -9,7 +9,7 @@ const Register = () => {
         email: '',
         password: '',
         name: '',
-        major: 'Genie Informatique'
+        major: 'Génie Industriel'
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -73,9 +73,9 @@ const Register = () => {
             <div className="max-w-md w-full bg-white p-10 rounded-xl relative z-10 border border-[#e0e0e0] shadow-sm animate-in fade-in zoom-in duration-700">
                 <div className="text-center mb-8">
                     <div className="relative inline-block group">
-                        <img src="/logo.png" alt="WladEsith" className="h-16 w-auto mx-auto relative z-10" />
+                        <img src="/logo.png" alt="ESITH" className="h-24 w-auto mx-auto relative z-10" />
                     </div>
-                    <h2 className="mt-6 text-2xl font-bold text-[#191919]">Make the most of your professional life</h2>
+                    <h2 className="mt-6 text-2xl font-bold text-[#191919]">Plateforme PFE & Entreprises</h2>
                 </div>
 
                 {error && (
@@ -116,10 +116,11 @@ const Register = () => {
                                 onChange={handleChange}
                                 className="w-full bg-white border border-[#666666] rounded px-3 py-2 text-[#191919] focus:outline-none focus:border-[#004b87] focus:ring-1 focus:ring-[#004b87] transition-all"
                             >
-                                <option value="Genie Informatique">Genie Informatique</option>
-                                <option value="Genie Industriel">Genie Industriel</option>
-                                <option value="Genie Textile">Genie Textile</option>
-                                <option value="Management">Management</option>
+                                <option value="Génie Industriel">Génie Industriel</option>
+                                <option value="Génie Informatique">Génie Informatique</option>
+                                <option value="Génie IMS">Génie IMS</option>
+                                <option value="Génie Textile">Génie Textile</option>
+                                <option value="Génie Chimie">Génie Chimie</option>
                             </select>
                         </div>
                         <div className="group">

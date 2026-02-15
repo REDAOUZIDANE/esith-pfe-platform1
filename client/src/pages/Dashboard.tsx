@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { BookOpen, Building2, Users, MessageSquare, Plus, ArrowRight, LayoutDashboard } from 'lucide-react';
+import { BookOpen, Building2, Users, Plus, ArrowRight, LayoutDashboard } from 'lucide-react';
 import { API_URL } from '../config';
 
 const Dashboard = () => {
@@ -9,23 +9,35 @@ const Dashboard = () => {
         pfes: 0,
         companies: 0,
         alumni: 0,
+        students: 0,
         recentPfes: []
     });
 
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const [pfeRes, companyRes, alumniRes] = await Promise.all([
+                const token = localStorage.getItem('token');
+                const [pfeRes, , , statRes, meRes] = await Promise.all([
                     axios.get(`${API_URL}/pfes`),
                     axios.get(`${API_URL}/companies`),
-                    axios.get(`${API_URL}/alumni`)
+                    axios.get(`${API_URL}/alumni`),
+                    axios.get(`${API_URL}/dashboard/stats`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    }),
+                    axios.get(`${API_URL}/auth/me`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    })
                 ]);
                 setStats({
-                    pfes: pfeRes.data.length,
-                    companies: companyRes.data.length,
-                    alumni: alumniRes.data.length,
+                    pfes: statRes.data.pfes,
+                    companies: statRes.data.companies,
+                    alumni: statRes.data.alumni,
+                    students: statRes.data.students,
                     recentPfes: pfeRes.data.slice(0, 5)
                 });
+                if (meRes.data.user) {
+                    localStorage.setItem('user', JSON.stringify(meRes.data.user));
+                }
             } catch (err) {
                 console.error('Error fetching stats:', err);
             }
@@ -37,7 +49,7 @@ const Dashboard = () => {
         { name: 'PFE Repository', value: stats.pfes, icon: BookOpen, color: 'from-blue-600 to-indigo-600', path: '/pfes' },
         { name: 'Partner Companies', value: stats.companies, icon: Building2, color: 'from-emerald-600 to-teal-600', path: '/companies' },
         { name: 'Alumni Network', value: stats.alumni, icon: Users, color: 'from-orange-600 to-amber-600', path: '/alumni' },
-        { name: 'Active Chats', value: '24', icon: MessageSquare, color: 'from-purple-600 to-pink-600', path: '/chat' },
+        { name: 'Total Students', value: stats.students, icon: Users, color: 'from-purple-600 to-pink-600', path: '/chat' },
     ];
 
     return (
@@ -119,7 +131,13 @@ const Dashboard = () => {
                             <Plus className="mr-2 h-4 w-4 text-[#004b87]" /> Fast Access
                         </h2>
                         <div className="grid grid-cols-2 gap-2">
-                            {['Profile', 'Chat', 'Settings', 'Archive'].map((link) => (
+                            <Link to="/profile" className="p-2 text-[10px] font-bold text-[#666666] bg-[#f3f2f0] rounded-lg hover:bg-[#004b87] hover:text-white transition-all text-center uppercase tracking-tight">
+                                Profile
+                            </Link>
+                            <Link to="/chat" className="p-2 text-[10px] font-bold text-[#666666] bg-[#f3f2f0] rounded-lg hover:bg-[#004b87] hover:text-white transition-all text-center uppercase tracking-tight">
+                                Chat
+                            </Link>
+                            {['Settings', 'Archive'].map((link) => (
                                 <button key={link} className="p-2 text-[10px] font-bold text-[#666666] bg-[#f3f2f0] rounded-lg hover:bg-[#004b87] hover:text-white transition-all text-center uppercase tracking-tight">
                                     {link}
                                 </button>

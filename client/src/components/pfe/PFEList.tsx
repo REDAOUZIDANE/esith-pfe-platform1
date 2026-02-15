@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Search, Filter, BookOpen, Building2, FileText, Presentation } from 'lucide-react';
+import { Search, Filter, BookOpen, Building2, FileText, Presentation, Plus, Trash2 } from 'lucide-react';
 import { API_URL, BASE_URL } from '../../config';
 
 const PFEList = () => {
     const [pfes, setPfes] = useState<any[]>([]);
     const [search, setSearch] = useState('');
     const [filter, setFilter] = useState('All');
+    const [user, setUser] = useState<any>(null);
 
     useEffect(() => {
+        const userData = localStorage.getItem('user');
+        if (userData) setUser(JSON.parse(userData));
+
         const fetchPFEs = async () => {
             const res = await axios.get(`${API_URL}/pfes`);
             setPfes(res.data);
@@ -21,6 +25,19 @@ const PFEList = () => {
             pfe.studentNames.toLowerCase().includes(search.toLowerCase())) &&
         (filter === 'All' || pfe.major.includes(filter))
     );
+
+    const handleDelete = async (id: number) => {
+        if (!window.confirm('Are you sure you want to delete this project?')) return;
+        try {
+            const token = localStorage.getItem('token');
+            await axios.delete(`${API_URL}/pfes/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setPfes(prev => prev.filter(p => p.id !== id));
+        } catch (error) {
+            alert('Failed to delete project');
+        }
+    };
 
     return (
         <div className="space-y-6 animate-in fade-in duration-700">
@@ -47,12 +64,20 @@ const PFEList = () => {
                                 onChange={(e) => setFilter(e.target.value)}
                             >
                                 <option value="All">All Majors</option>
-                                <option>Genie Informatique</option>
-                                <option>Genie Industriel</option>
-                                <option>Genie Textile</option>
-                                <option>Management</option>
+                                <option>Ingénieur Industriel</option>
+                                <option>Ingénieur IMS</option>
+                                <option>Textile</option>
+                                <option>Chimie</option>
+                                <option>Génie Informatique</option>
                             </select>
                         </div>
+                        <button
+                            onClick={() => window.location.href = '/pfes/new'}
+                            className="bg-[#004b87] text-white p-2 rounded-lg hover:bg-[#003662] transition-colors shadow-sm flex items-center justify-center whitespace-nowrap px-4"
+                        >
+                            <Plus size={16} className="mr-1" />
+                            <span className="text-sm font-bold">New Project</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -72,6 +97,14 @@ const PFEList = () => {
                             <h3 className="text-sm font-bold text-[#191919] line-clamp-2 leading-snug group-hover:text-[#004b87] transition-colors">
                                 {pfe.title}
                             </h3>
+                            {user?.role === 'ADMIN' && (
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); handleDelete(pfe.id); }}
+                                    className="absolute top-2 right-2 p-1.5 bg-white/80 backdrop-blur-sm text-red-500 rounded-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-red-50"
+                                >
+                                    <Trash2 size={14} />
+                                </button>
+                            )}
                         </div>
                         <div className="p-6 flex-1 flex flex-col">
                             <div className="flex items-center space-x-3 mb-4">

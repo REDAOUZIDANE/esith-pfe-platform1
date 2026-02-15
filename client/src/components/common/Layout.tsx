@@ -68,6 +68,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         { path: '/companies', label: 'Partners', icon: Building2 },
         { path: '/alumni', label: 'Network', icon: Users },
         { path: '/chat', label: 'Campus Live', icon: MessageSquare },
+        ...(user?.role === 'ADMIN' ? [{ path: '/admin/users', label: 'Management', icon: Users }] : []),
     ];
 
     const handleLogout = () => {
@@ -83,12 +84,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 {/* Simplified Sidebar */}
                 <aside className="w-64 bg-white border-r border-[#e0e0e0] flex flex-col shadow-sm z-30 relative">
                     <div className="p-6 flex flex-col items-center border-b border-[#f3f2f0]">
-                        <div className="w-12 h-12 bg-[#004b87] rounded-lg flex items-center justify-center shadow-md overflow-hidden mb-3">
-                            <span className="text-xl font-black text-white">E</span>
+                        <div className="mb-3 transform hover:scale-105 transition-transform duration-300">
+                            <img src="/logo.png" alt="ESITH" className="h-20 w-auto" />
                         </div>
-                        <h1 className="text-lg font-bold text-[#191919] tracking-tight">
-                            Campus<span className="text-[#004b87]">Link</span>
-                        </h1>
                         <div className="mt-3 flex items-center space-x-2 px-3 py-1 bg-[#9fdf00]/10 rounded-full border border-[#9fdf00]/20">
                             <div className="w-1.5 h-1.5 bg-[#057642] rounded-full animate-pulse"></div>
                             <span className="text-[10px] font-bold text-[#057642] uppercase tracking-wider">{onlineCount} connected</span>
@@ -192,12 +190,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                         </div>
 
                         <footer className="py-8 px-6 border-t border-[#e0e0e0] bg-white text-[#666666]">
-                            <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs">
-                                <div className="flex items-center space-x-2">
-                                    <span className="font-bold text-[#004b87]">ESITH</span>
-                                    <span>© {new Date().getFullYear()} CampusLink</span>
+                            <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center text-[10px] gap-4">
+                                <div className="flex flex-col items-center md:items-start space-y-1">
+                                    <div className="flex items-center space-x-2">
+                                        <span className="font-bold text-[#004b87]">ESITH</span>
+                                        <span>© {new Date().getFullYear()} CampusLink</span>
+                                    </div>
+                                    <p className="font-bold text-[#191919]">
+                                        Created by <span className="text-[#004b87]">Ouzidane Reda Limbo</span> - Safa Aterbi Quack <span className="text-[#057642]">ingénieur promo 2026</span>
+                                    </p>
                                 </div>
-                                <div className="mt-4 md:mt-0 flex items-center space-x-4 font-medium">
+                                <div className="flex items-center space-x-4 font-medium">
                                     <a href="#" className="hover:text-[#004b87] hover:underline">About</a>
                                     <a href="#" className="hover:text-[#004b87] hover:underline">Accessibility</a>
                                     <a href="#" className="hover:text-[#004b87] hover:underline">Help Center</a>

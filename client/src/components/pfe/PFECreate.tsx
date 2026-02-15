@@ -58,7 +58,7 @@ const PFECreate = () => {
             });
             navigate('/pfes');
         } catch (err: any) {
-            setError(err.response?.data?.message || 'Failed to create PFE. Make sure you are logged in as Admin.');
+            setError(err.response?.data?.message || 'Failed to submit project. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -109,10 +109,11 @@ const PFECreate = () => {
                             onChange={handleChange}
                             className="w-full bg-[#f3f2f0] border border-transparent rounded-lg px-4 py-2 text-sm text-[#191919] focus:outline-none focus:bg-white focus:border-[#004b87] transition-all"
                         >
-                            <option>Genie Informatique</option>
-                            <option>Genie Industriel</option>
-                            <option>Genie Textile</option>
-                            <option>Management</option>
+                            <option>Ingénieur Industriel</option>
+                            <option>Ingénieur IMS</option>
+                            <option>Textile</option>
+                            <option>Chimie</option>
+                            <option>Génie Informatique</option>
                         </select>
                     </div>
 

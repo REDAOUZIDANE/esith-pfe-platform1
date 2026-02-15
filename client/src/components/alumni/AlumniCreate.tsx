@@ -66,9 +66,11 @@ const AlumniCreate = () => {
                             onChange={handleChange}
                         >
                             <option value="">Select Major</option>
-                            <option value="Informatique">Genie Informatique</option>
-                            <option value="Industriel">Genie Industriel</option>
-                            <option value="Textile">Genie Textile</option>
+                            <option value="Ingénieur Industriel">Ingénieur Industriel</option>
+                            <option value="Ingénieur IMS">Ingénieur IMS</option>
+                            <option value="Textile">Textile</option>
+                            <option value="Chimie">Chimie</option>
+                            <option value="Génie Informatique">Génie Informatique</option>
                         </select>
                     </div>
                 </div>

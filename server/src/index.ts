@@ -6,6 +6,8 @@ import pfeRoutes from './routes/pfe.routes';
 import companyRoutes from './routes/company.routes';
 import alumniRoutes from './routes/alumni.routes';
 import alertRoutes from './routes/alert.routes';
+import chatRoutes from './routes/chat.routes';
+import dashboardRoutes from './routes/dashboard.routes';
 import { setupSocket } from './utils/socket';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
@@ -37,6 +39,8 @@ app.use('/api/pfes', pfeRoutes);
 app.use('/api/companies', companyRoutes);
 app.use('/api/alumni', alumniRoutes);
 app.use('/api/alerts', alertRoutes);
+app.use('/api/chat', chatRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 app.use('/uploads', express.static('uploads'));
 
 app.get('/', (req, res) => {
