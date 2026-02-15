@@ -36,6 +36,9 @@ const setupSocket = (server) => {
                 const newMessage = await prisma_1.default.message.create({
                     data: {
                         content: data.content,
+                        type: data.type || 'TEXT',
+                        fileUrl: data.fileUrl,
+                        duration: data.duration,
                         room: data.room,
                         senderId: data.senderId
                     },

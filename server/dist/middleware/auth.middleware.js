@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authenticateToken = void 0;
+exports.authorizeAdmin = exports.authenticateToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const JWT_SECRET = process.env.JWT_SECRET || 'esith-campuslink-secret-key-2024';
 const authenticateToken = async (req, res, next) => {
@@ -27,3 +27,10 @@ const authenticateToken = async (req, res, next) => {
     }
 };
 exports.authenticateToken = authenticateToken;
+const authorizeAdmin = (req, res, next) => {
+    if (req.user?.role !== 'ADMIN') {
+        return res.status(403).json({ message: 'Forbidden: Admin access required' });
+    }
+    next();
+};
+exports.authorizeAdmin = authorizeAdmin;
