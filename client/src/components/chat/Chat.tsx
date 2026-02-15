@@ -6,7 +6,7 @@ import VideoRecorder from './VideoRecorder';
 import axios from 'axios';
 import { API_URL } from '../../config';
 
-const socket = io('http://localhost:3000');
+const socket = io(window.location.origin);
 
 const Chat = () => {
     const [user, setUser] = useState<any>(null);

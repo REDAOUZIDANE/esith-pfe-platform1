@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import http from 'http';
+import path from 'path';
 import authRoutes from './routes/auth.routes';
 import pfeRoutes from './routes/pfe.routes';
 import companyRoutes from './routes/company.routes';
@@ -43,8 +44,22 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/uploads', express.static('uploads'));
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.send('WladEsith CampusLink API');
+});
+
+// Serve frontend static files
+const clientDistPath = path.join(__dirname, '../../client/dist');
+app.use(express.static(clientDistPath));
+
+// Static uploads
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+// Catch-all route for React Router
+app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api')) {
+        res.sendFile(path.join(clientDistPath, 'index.html'));
+    }
 });
 
 // Setup Socket.io
