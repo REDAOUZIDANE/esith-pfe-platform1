@@ -16,8 +16,8 @@ const Chat = () => {
     const [rooms, setRooms] = useState<any[]>([]);
     const [newRoomName, setNewRoomName] = useState('');
     const [showNewRoomModal, setShowNewRoomModal] = useState(false);
-    const [isRecording, setIsRecording] = useState(false);
-    const [recordingDuration, setRecordingDuration] = useState(0);
+    const [isRecording] = useState(false);
+    const [recordingDuration] = useState(0);
     const [uploading, setUploading] = useState(false);
     const [showVideoRecorder, setShowVideoRecorder] = useState(false);
     const [showAudioRecorder, setShowAudioRecorder] = useState(false);
