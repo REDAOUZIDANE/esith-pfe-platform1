@@ -56,7 +56,7 @@ app.use(express.static(clientDistPath));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Catch-all route for React Router
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
     if (!req.path.startsWith('/api')) {
         res.sendFile(path.join(clientDistPath, 'index.html'));
     }
