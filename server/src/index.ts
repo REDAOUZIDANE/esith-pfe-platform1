@@ -17,22 +17,14 @@ const app = express();
 const server = http.createServer(app);
 
 // Security Middleware
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: false, // Disable CSP for easier deployment, react-router usage
+}));
 app.use(cors({
-    origin: process.env.FRONTEND_URL || true,
+    origin: true,
     credentials: true
 }));
 app.use(express.json());
-
-// Rate Limiting (Disabled for internal testing/dev)
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    limit: 1000, // Increased for dev
-    standardHeaders: 'draft-7',
-    legacyHeaders: false,
-    message: { message: 'Too many requests from this IP, please try again after 15 minutes' }
-});
-// app.use('/api/', limiter);
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -42,7 +34,9 @@ app.use('/api/alumni', alumniRoutes);
 app.use('/api/alerts', alertRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/dashboard', dashboardRoutes);
-app.use('/uploads', express.static('uploads'));
+
+// Static uploads
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.get('/api', (req, res) => {
     res.send('WladEsith CampusLink API');
@@ -52,13 +46,12 @@ app.get('/api', (req, res) => {
 const clientDistPath = path.join(__dirname, '../../client/dist');
 app.use(express.static(clientDistPath));
 
-// Static uploads
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-
-// Catch-all route for React Router
-app.get('/*', (req, res) => {
+// Final catch-all for React Router or missing API routes
+app.use((req, res) => {
     if (!req.path.startsWith('/api')) {
         res.sendFile(path.join(clientDistPath, 'index.html'));
+    } else {
+        res.status(404).send('API endpoint not found');
     }
 });
 
